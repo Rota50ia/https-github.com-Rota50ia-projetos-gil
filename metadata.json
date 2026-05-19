@@ -1,0 +1,8 @@
+{
+  "name": "Gil para Todo Mundo Cantar Junto",
+  "description": "Uma celebração intimista da obra de Gilberto Gil por artistas goianos.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
