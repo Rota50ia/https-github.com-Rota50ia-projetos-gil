@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gil Para Todo Mundo Cantar Junto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --amber: #f59e0b;
+      --amber-light: #fbbf24;
+      --amber-pale: #fde68a;
+    }
+
+    body {
+      background: #050505;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 50;
+      background: rgba(5,5,5,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing: 0.01em;
+    }
+    .logo span { color: var(--amber); }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.5);
+    }
+    .nav-links a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #fff; }
+
+    /* HERO */
+    #hero {
+      padding: 10rem 2.5rem 6rem;
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .badge {
+      display: inline-block;
+      padding: 5px 16px;
+      border-radius: 99px;
+      background: rgba(245,158,11,0.1);
+      border: 1px solid rgba(245,158,11,0.25);
+      color: var(--amber);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 1.75rem;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(44px, 6vw, 80px);
+      font-weight: 900;
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      margin-bottom: 2rem;
+      color: #fff;
+    }
+    h1 .gold {
+      background: linear-gradient(90deg, var(--amber-pale), var(--amber), var(--amber-pale));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 16px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.75;
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+    }
+    .btn-group {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      padding: 14px 28px;
+      background: var(--amber);
+      color: #000;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      border-radius: 99px;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s, transform 0.15s;
+      text-decoration: none;
+    }
+    .btn-primary:hover { background: var(--amber-light); transform: translateY(-1px); }
+    .btn-ghost {
+      padding: 14px 28px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      border-radius: 99px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .hero-visual {
+      position: relative;
+    }
+    .hero-img-main {
+      aspect-ratio: 4/5;
+      border-radius: 2rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      overflow: hidden;
+      background: linear-gradient(135deg, #1a1400, #2d2000);
+      filter: grayscale(1);
+      transition: filter 0.7s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-img-main:hover { filter: grayscale(0); }
+    .img-placeholder {
+      text-align: center;
+      color: rgba(255,255,255,0.12);
+      font-size: 13px;
+      line-height: 2;
+    }
+    .img-placeholder svg { opacity: 0.15; margin-bottom: 8px; }
+    .hero-img-accent {
+      position: absolute;
+      bottom: -2rem;
+      left: -2rem;
+      width: 160px;
+      height: 160px;
+      border-radius: 1.5rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      overflow: hidden;
+      background: linear-gradient(135deg, #1a1400, #2d2000);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* STATS */
+    #highlights {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.015);
+      padding: 5rem 2.5rem;
+    }
+    .stats-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      text-align: center;
+      gap: 2rem;
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 56px;
+      font-weight: 900;
+      color: var(--amber);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 10px;
+      color: rgba(255,255,255,0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-weight: 700;
+      margin-top: 10px;
+    }
+
+    /* PROJETO */
+    #projeto {
+      padding: 8rem 2.5rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .section-title svg { color: var(--amber); flex-shrink: 0; }
+    .quote-block {
+      border-left: 2px solid var(--amber);
+      padding-left: 1.5rem;
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.8;
+      font-style: italic;
+      margin-bottom: 3rem;
+    }
+    .cards-stack { display: flex; flex-direction: column; gap: 16px; }
+    .card {
+      padding: 1.5rem 2rem;
+      border-radius: 1.5rem;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: background 0.2s;
+    }
+    .card:hover { background: rgba(255,255,255,0.045); }
+    .card h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+    .card p { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.6; }
+    .sticky-img {
+      position: sticky;
+      top: 6rem;
+      aspect-ratio: 1;
+      border-radius: 2.5rem;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: linear-gradient(135deg, #1a1400, #2d2000);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .sticky-img-caption {
+      position: absolute;
+      bottom: 3rem;
+      left: 3rem;
+      right: 3rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      font-style: italic;
+      line-height: 1.3;
+    }
+
+    /* OBJETIVOS */
+    #objetivos {
+      padding: 8rem 2.5rem;
+      background: #0a0a0a;
+    }
+    .objetivos-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .objetivos-inner .section-title {
+      justify-content: center;
+      font-size: 44px;
+    }
+    .objetivos-inner p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.75;
+      margin-bottom: 4rem;
+    }
+    .goals-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      text-align: left;
+    }
+    .goal-card {
+      padding: 1.75rem;
+      border-radius: 1rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: border-color 0.2s;
+    }
+    .goal-card:hover { border-color: rgba(245,158,11,0.3); }
+    .goal-card h4 { color: var(--amber); font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+    .goal-card p { font-size: 13px; color: rgba(255,255,255,0.35); line-height: 1.6; }
+
+    /* PATROCINIO */
+    #patrocinio {
+      padding: 8rem 2.5rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .patrocinio-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .patrocinio-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 44px;
+      font-weight: 700;
+      font-style: italic;
+      letter-spacing: -0.02em;
+      margin-bottom: 2rem;
+      line-height: 1.1;
+    }
+    .patrocinio-title span { color: var(--amber); }
+    .valor-box {
+      padding: 1.5rem 2rem;
+      border-radius: 1rem;
+      background: var(--amber);
+      color: #000;
+      margin-bottom: 2rem;
+    }
+    .valor-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.55; margin-bottom: 6px; }
+    .valor-num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900; font-style: italic; }
+    .patrocinio-desc { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.75; }
+    .benefit-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .benefit-card {
+      padding: 2rem;
+      border-radius: 1.5rem;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: background 0.2s;
+    }
+    .benefit-card:hover { background: rgba(255,255,255,0.04); }
+    .benefit-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(245,158,11,0.1);
+      border: 1px solid rgba(245,158,11,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      color: var(--amber);
+      transition: background 0.2s, color 0.2s;
+    }
+    .benefit-card:hover .benefit-icon { background: var(--amber); color: #000; }
+    .benefit-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 1rem; }
+    .benefit-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .benefit-card li { font-size: 12px; color: rgba(255,255,255,0.4); display: flex; align-items: center; gap: 8px; }
+    .check { color: rgba(245,158,11,0.5); font-size: 14px; flex-shrink: 0; }
+
+    /* CTA */
+    #contato {
+      padding: 6rem 2.5rem;
+    }
+    .cta-box {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 6rem 4rem;
+      border-radius: 4rem;
+      background: linear-gradient(135deg, var(--amber), #d97706);
+      color: #000;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-box h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 0.95;
+      margin-bottom: 1.5rem;
+      color: #000;
+    }
+    .cta-box > p {
+      font-size: 16px;
+      color: rgba(0,0,0,0.65);
+      margin-bottom: 3rem;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.65;
+    }
+    .cta-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .contact-item { display: flex; align-items: center; gap: 12px; }
+    .contact-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--amber);
+      flex-shrink: 0;
+    }
+    .contact-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.55; margin-bottom: 2px; }
+    .contact-num { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 900; line-height: 1.1; }
+    .divider { width: 1px; height: 44px; background: rgba(0,0,0,0.2); }
+    .btn-cta {
+      padding: 16px 36px;
+      background: #000;
+      color: var(--amber);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      border-radius: 99px;
+      font-size: 15px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-cta:hover { background: #111; }
+    .cta-glow-1 {
+      position: absolute;
+      top: -4rem;
+      right: -4rem;
+      width: 16rem;
+      height: 16rem;
+      background: rgba(255,255,255,0.12);
+      filter: blur(80px);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .cta-glow-2 {
+      position: absolute;
+      bottom: -4rem;
+      left: -4rem;
+      width: 16rem;
+      height: 16rem;
+      background: rgba(0,0,0,0.08);
+      filter: blur(80px);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 2.5rem 2.5rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: rgba(255,255,255,0.25);
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .footer-tags {
+      display: flex;
+      gap: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    /* SVG ICONS inline */
+    .icon-amber { color: var(--amber); }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 1.25rem; }
+      .nav-links { display: none; }
+      #hero { grid-template-columns: 1fr; padding: 8rem 1.25rem 3rem; gap: 2.5rem; }
+      .hero-img-accent { display: none; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .two-col { grid-template-columns: 1fr; gap: 3rem; }
+      .sticky-img { position: static; }
+      .goals-grid { grid-template-columns: 1fr; }
+      .patrocinio-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .benefit-grid { grid-template-columns: 1fr; }
+      .cta-box { padding: 3rem 1.5rem; border-radius: 2rem; }
+      .cta-actions { flex-direction: column; }
+      .divider { display: none; }
+      #projeto, #patrocinio { padding: 5rem 1.25rem; }
+      #objetivos { padding: 5rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">GIL PARA TODO MUNDO <span>CANTAR JUNTO</span></div>
+    <div class="nav-links">
+      <a href="#projeto">O Projeto</a>
+      <a href="#objetivos">Objetivos</a>
+      <a href="#patrocinio">Patrocínio</a>
+      <a href="#contato">Contato</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section>
+    <div id="hero">
+      <div>
+        <div class="badge">Proponente: Larissa Moura</div>
+        <h1>GIL PARA TODO MUNDO<br><span class="gold">CANTAR JUNTO</span></h1>
+        <p class="hero-sub">Quatro apresentações gratuitas que celebram a obra de Gilberto Gil por artistas goianos. Uma experiência intimista em Goiânia.</p>
+        <div class="btn-group">
+          <a href="#contato" class="btn-primary">
+            Seja um Patrocinador
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+          </a>
+          <button class="btn-ghost">Lei Goyazes aprovado</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-img-main">
+          <div class="img-placeholder">
+            <svg width="64" height="64" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+            <br>Larissa Moura canta<br>Gilberto Gil
+          </div>
+        </div>
+        <div class="hero-img-accent">
+          <div class="img-placeholder" style="font-size:10px">
+            <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section id="highlights">
+    <div class="stats-grid">
+      <div>
+        <div class="stat-num">04</div>
+        <div class="stat-label">Shows Gratuitos</div>
+      </div>
+      <div>
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Aprovação Lei Goyazes</div>
+      </div>
+      <div>
+        <div class="stat-num" style="font-size:36px;padding-top:10px">Goiânia</div>
+        <div class="stat-label">Locais Estratégicos</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- O PROJETO -->
+  <section id="projeto">
+    <div class="two-col">
+      <div>
+        <h2 class="section-title">
+          <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" class="icon-amber"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          O Projeto
+        </h2>
+        <div class="quote-block">
+          "Shows que oferecem uma experiência intimista em bares e espaços culturais de Goiânia, promovendo proximidade real com o público."
+        </div>
+        <div class="cards-stack">
+          <div class="card">
+            <h3>Hits Icônicos</h3>
+            <p>"Aquele Abraço", "Toda Menina Baiana" e "Palco".</p>
+          </div>
+          <div class="card">
+            <h3>Jóias Escondidas</h3>
+            <p>Músicas menos divulgadas que surpreendem até os conhecedores.</p>
+          </div>
+          <div class="card">
+            <h3>Arranjos Autorais</h3>
+            <p>Conexão da obra de Gil com a cena musical atual de Goiás.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="sticky-img">
+          <div class="img-placeholder">
+            <svg width="64" height="64" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+            <br>Expressão Cultural
+          </div>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 50%)"></div>
+          <div class="sticky-img-caption">Ressignificação e continuidade da memória cultural brasileira.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OBJETIVOS -->
+  <section id="objetivos">
+    <div class="objetivos-inner">
+      <div style="display:flex;justify-content:center;margin-bottom:1.5rem">
+        <svg width="48" height="48" fill="none" stroke="#f59e0b" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+      </div>
+      <h2 class="section-title" style="justify-content:center;font-size:40px">Por que este projeto é vital?</h2>
+      <p>Combatemos o envelhecimento cultural, tirando a obra de Gilberto Gil dos arquivos e trazendo-a para o presente, viva e acessível.</p>
+      <div class="goals-grid">
+        <div class="goal-card">
+          <h4>Perpetuar a Memória</h4>
+          <p>Ação de ressignificação e continuidade da cultura brasileira em Goiás.</p>
+        </div>
+        <div class="goal-card">
+          <h4>Acesso Facilitado</h4>
+          <p>Gratuidade em locais onde o público já está em clima de lazer.</p>
+        </div>
+        <div class="goal-card">
+          <h4>Engajamento Real</h4>
+          <p>Estimula a participação espontânea: o público canta junto.</p>
+        </div>
+        <div class="goal-card">
+          <h4>Estratégia de Marca</h4>
+          <p>Presença orgânica no momento celebrativo do público.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PATROCÍNIO -->
+  <section>
+    <div id="patrocinio">
+      <div class="patrocinio-grid">
+        <div>
+          <p class="patrocinio-title">Oportunidade para o <span>Patrocinador</span></p>
+          <div class="valor-box">
+            <div class="valor-label">Valor para Captação</div>
+            <div class="valor-num">R$ 93.006,09</div>
+          </div>
+          <p class="patrocinio-desc">Este projeto oferece uma chance de unir pessoas por meio da música e fortalecer o capital social da empresa.</p>
+        </div>
+        <div class="benefit-grid">
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            </div>
+            <h3>Visibilidade Institucional</h3>
+            <ul>
+              <li><span class="check">✓</span> Peças digitais</li>
+              <li><span class="check">✓</span> Releases &amp; Imprensa</li>
+              <li><span class="check">✓</span> Créditos oficiais</li>
+              <li><span class="check">✓</span> Ambiente dos shows</li>
+            </ul>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <h3>Experiência de Marca</h3>
+            <ul>
+              <li><span class="check">✓</span> Ativação presencial</li>
+              <li><span class="check">✓</span> Relacionamento direto</li>
+              <li><span class="check">✓</span> Conteúdo para redes</li>
+              <li><span class="check">✓</span> Amostras e brindes</li>
+            </ul>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3>Reputação Social</h3>
+            <ul>
+              <li><span class="check">✓</span> Valor de brasilidade</li>
+              <li><span class="check">✓</span> Diversidade cultural</li>
+              <li><span class="check">✓</span> Democratização de acesso</li>
+              <li><span class="check">✓</span> Fortalecimento local</li>
+            </ul>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+            </div>
+            <h3>Posicionamento</h3>
+            <ul>
+              <li><span class="check">✓</span> Baixo risco</li>
+              <li><span class="check">✓</span> Alta penetração</li>
+              <li><span class="check">✓</span> Fácil reconhecimento</li>
+              <li><span class="check">✓</span> Respeito ao nome de Gil</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="contato">
+    <div class="cta-box">
+      <div class="cta-glow-1"></div>
+      <div class="cta-glow-2"></div>
+      <div style="position:relative;z-index:1">
+        <h2>VAMOS FAZER<br>ESSA MEMÓRIA<br>VIBRAR?</h2>
+        <p>Confirmar interesse, agendar reunião para estratégia de ativação e formalizar via Lei Goyazes.</p>
+        <div class="cta-actions">
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div>
+              <div class="contact-label">Contato Adriana Parreira</div>
+              <div class="contact-num">62 99901-5748</div>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <button class="btn-cta">Quero Patrocinar agora</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 Gil Para Todo Mundo Cantar Junto. Proponente: Larissa Moura.</span>
+    <div class="footer-tags">
+      <span>Lei Goyazes</span>
+      <span>Goiânia, GO</span>
+      <span>Cultura Viva</span>
+    </div>
+  </footer>
+
+</body>
+</html>
